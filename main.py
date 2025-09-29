@@ -101,34 +101,47 @@ async def check_ban_command(ctx):
             timestamp=ctx.message.created_at
         )
 
-        if is_banned:
-            embed.title = "**▌ Banned Account 🛑 **" if lang == "en" else "**▌ Compte banni 🛑 **"
-            embed.description = (
-                f"**• {'Reason' if lang == 'en' else 'Raison'} :** "
-                f"{'This account was confirmed for using cheats.' if lang == 'en' else 'Ce compte a été confirmé comme utilisant des hacks.'}\n"
-                f"**• {'Suspension duration' if lang == 'en' else 'Durée de la suspension'} :** {period_str}\n"
-                f"**• {'Nickname' if lang == 'en' else 'Pseudo'} :** `{nickname}`\n"
-                f"**• {'Player ID' if lang == 'en' else 'ID du joueur'} :** `{id_str}`\n"
-                f"**• {'Region' if lang == 'en' else 'Région'} :** `{region}`"
-            )
-            # embed.set_image(url="https://i.ibb.co/wFxTy8TZ/banned.gif")
-            file = discord.File("assets/banned.gif", filename="banned.gif")
-            embed.set_image(url="attachment://banned.gif")
-        else:
-            embed.title = "**▌ Clean Account ✅ **" if lang == "en" else "**▌ Compte non banni ✅ **"
-            embed.description = (
-                f"**• {'Status' if lang == 'en' else 'Statut'} :** "
-                f"{'No sufficient evidence of cheat usage on this account.' if lang == 'en' else 'Aucune preuve suffisante pour confirmer l’utilisation de hacks sur ce compte.'}\n"
-                f"**• {'Nickname' if lang == 'en' else 'Pseudo'} :** `{nickname}`\n"
-                f"**• {'Player ID' if lang == 'en' else 'ID du joueur'} :** `{id_str}`\n"
-                f"**• {'Region' if lang == 'en' else 'Région'} :** `{region}`"
-            )
-            # embed.set_image(url="https://i.ibb.co/Kx1RYVKZ/notbanned.gif")
-            file = discord.File("assets/notbanned.gif", filename="notbanned.gif")
-            embed.set_image(url="attachment://notbanned.gif")
+if is_banned:
+    embed = discord.Embed(
+        title="🚫 ✦ Banned Account ✦ 🚫" if lang == "en" else "🚫 ✦ Compte banni ✦ 🚫",
+        description=(
+            f"━━━━━━━━━━━━━━━━━━━━━━\n"
+            f"**📌 {'Reason' if lang == 'en' else 'Raison'} :** "
+            f"{'This account was confirmed for using cheats.' if lang == 'en' else 'Ce compte a été confirmé comme utilisant des hacks.'}\n\n"
+            f"**⏳ {'Suspension duration' if lang == 'en' else 'Durée de la suspension'} :** `{period_str}`\n"
+            f"**🎭 {'Nickname' if lang == 'en' else 'Pseudo'} :** `{nickname}`\n"
+            f"**🆔 {'Player ID' if lang == 'en' else 'ID du joueur'} :** `{id_str}`\n"
+            f"**🌍 {'Region' if lang == 'en' else 'Région'} :** `{region}`\n"
+            f"━━━━━━━━━━━━━━━━━━━━━━"
+        ),
+        color=discord.Color.red()
+    )
+    file = discord.File("assets/banned.gif", filename="banned.gif")
+    embed.set_image(url="attachment://banned.gif")
 
-        embed.set_thumbnail(url=ctx.author.avatar.url if ctx.author.avatar else ctx.author.default_avatar.url)
-        embed.set_footer(text="Developer By ! 1n Only Leo•")
-        await ctx.send(f"{ctx.author.mention}", embed=embed ,file=file)
+else:
+    embed = discord.Embed(
+        title="✅ ✦ Clean Account ✦ ✅" if lang == "en" else "✅ ✦ Compte non banni ✦ ✅",
+        description=(
+            f"━━━━━━━━━━━━━━━━━━━━━━\n"
+            f"**📌 {'Status' if lang == 'en' else 'Statut'} :** "
+            f"{'No sufficient evidence of cheat usage on this account.' if lang == 'en' else 'Aucune preuve suffisante pour confirmer l’utilisation de hacks sur ce compte.'}\n\n"
+            f"**🎭 {'Nickname' if lang == 'en' else 'Pseudo'} :** `{nickname}`\n"
+            f"**🆔 {'Player ID' if lang == 'en' else 'ID du joueur'} :** `{id_str}`\n"
+            f"**🌍 {'Region' if lang == 'en' else 'Région'} :** `{region}`\n"
+            f"━━━━━━━━━━━━━━━━━━━━━━"
+        ),
+        color=discord.Color.green()
+    )
+    file = discord.File("assets/notbanned.gif", filename="notbanned.gif")
+    embed.set_image(url="attachment://notbanned.gif")
+
+# common parts
+embed.set_thumbnail(url=ctx.author.avatar.url if ctx.author.avatar else ctx.author.default_avatar.url)
+embed.set_footer(text="🔥 Developed by ! 1n Only Leo •", icon_url="https://cdn-icons-png.flaticon.com/512/1048/1048953.png")
+embed.timestamp = ctx.message.created_at
+
+await ctx.send(f"{ctx.author.mention}", embed=embed, file=file)
+
 
 bot.run(TOKEN)
